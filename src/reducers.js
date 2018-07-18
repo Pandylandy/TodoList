@@ -23,7 +23,6 @@ export const todo = (state = [], action) => {
       return state.map(setStatusOpen);
 
     case CONST.ADD_TASK:
-      console.log(...state);
       return [...state, {id: id++, status: 'open', text: action.text }];
 
       case CONST.CLOSE_TASK:
@@ -31,7 +30,6 @@ export const todo = (state = [], action) => {
         return state.map(setStatusDone);
 
       case CONST.SHOW_ACTIVE:
-        console.log('!!!', state);
           const filterOpen = (o) => o.status === 'open';
           return state.filter(filterOpen);
 
@@ -40,8 +38,9 @@ export const todo = (state = [], action) => {
 
           return state.filter(filterClosed);
 
-      case CONST.SHOW_ALL:
-          return [];
+      case CONST.DELETE_TASK:
+          return state.filter(o => o.id !== action.id)
+              // .map((o, i) => o.id = i+1);
 
     default:
       return state;

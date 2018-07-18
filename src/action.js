@@ -29,3 +29,9 @@ export const showClosedAction = () => ({
 export const showAllAction = () => ({
     type: CONST.SHOW_ALL,
 });
+
+export const deleteTaskAction = (id) => ({
+    type: CONST.DELETE_TASK,
+    id,
+});
+

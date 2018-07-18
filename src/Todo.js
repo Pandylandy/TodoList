@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Input, Button, Divider } from 'antd';
-import { addTaskAction, closeTaskAction, activateTaskAction} from "./action";
+import { addTaskAction, closeTaskAction, activateTaskAction, deleteTaskAction} from "./action";
 import { Select } from 'antd';
 
 
@@ -35,7 +35,7 @@ class ToDo extends React.Component {
 
     render() {
 
-        const {addTask, closeTask, activateTask, data} = this.props;
+        const {addTask, deleteTask, closeTask, activateTask, data} = this.props;
 
         const Todos = getTodos(data, keyFilter);
 
@@ -68,6 +68,8 @@ class ToDo extends React.Component {
                   <Button href="" onClick={() => closeTask(x)}>Close</Button>
                   <Divider type="vertical"/>
                   <Button href="" onClick={() => activateTask(x)}>Open</Button>
+                    <Divider type="vertical"/>
+                  <Button href="" onClick={() => deleteTask(x)}>Delete</Button>
                 </span>
             )
             },
@@ -104,6 +106,7 @@ const mapDispatchToProps = dispatch => ({
   addTask: (text) => dispatch(addTaskAction(text)),
   closeTask: (id) => dispatch(closeTaskAction(id)),
   activateTask : (id) => dispatch(activateTaskAction(id)),
+    deleteTask : (id) => dispatch(deleteTaskAction(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);
