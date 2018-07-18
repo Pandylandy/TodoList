@@ -30,6 +30,19 @@ export const todo = (state = [], action) => {
         const setStatusDone = setStatus(action.id, 'done');
         return state.map(setStatusDone);
 
+      case CONST.SHOW_ACTIVE:
+        console.log('!!!', state);
+          const filterOpen = (o) => o.status === 'open';
+          return state.filter(filterOpen);
+
+      case CONST.SHOW_CLOSED:
+          const filterClosed = (o) => o.status === 'done';
+
+          return state.filter(filterClosed);
+
+      case CONST.SHOW_ALL:
+          return [];
+
     default:
       return state;
   }

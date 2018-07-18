@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Input, Button, Divider } from 'antd';
-import { addTaskAction, closeTaskAction, activateTaskAction } from "./action";
+import { addTaskAction, closeTaskAction, activateTaskAction, showActiveAction, showClosedAction, showAllAction } from "./action";
 import { Select } from 'antd';
 
 
@@ -12,10 +12,7 @@ function handleChange(value) {
 
 }
 
-const onClick = (key) => {
-    const data = [this.state.data];
-    this.setState({ data: data.filter(item => item.key !== key) });
-  };
+
 
 const Search = Input.Search;
 
@@ -27,8 +24,20 @@ const todoStates = {
   }
 ;
 
-const ToDo = ({ addTask, closeTask, activateTask, data }) => {
+const ToDo = ({ addTask, closeTask, activateTask, showActive, showAll, showClosed, data }) => {
 
+  const onClick = (key) => {
+        if (todoStates[key] === 'Active') {
+          console.log('^^', showActive);
+            return showActive();
+        }
+        else  if (todoStates[key] === 'Done') {
+            return showClosed();
+        }
+        else    {
+            return showAll();
+        }
+    };
   const columns = [{
     title: 'Id',
     dataIndex: 'id',
@@ -59,7 +68,7 @@ const ToDo = ({ addTask, closeTask, activateTask, data }) => {
   ];
   return (
     <div align="center">
-      <Select defaultValue="active" style={{ width: 120 }} onChange={handleChange}>
+      <Select defaultValue="active" style={{ width: 120 }} onChange={onClick}>
         {Object.keys(todoStates).map((key, i) =>
           <Option key={i} value={key}>{todoStates[key]}</Option>
         )}
@@ -85,6 +94,9 @@ const mapDispatchToProps = dispatch => ({
   addTask: (text) => dispatch(addTaskAction(text)),
   closeTask: (id) => dispatch(closeTaskAction(id)),
   activateTask : (id) => dispatch(activateTaskAction(id)),
+  showActive: () => dispatch(showActiveAction()),
+  showClosed: () => dispatch(showClosedAction()),
+  showAll: () => dispatch(showAllAction())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

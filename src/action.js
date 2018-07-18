@@ -11,7 +11,21 @@ export const closeTaskAction = id => ({
   id,
 });
 
-export const activateTaskAction = text => ({
+export const activateTaskAction = id => ({
   type: CONST.ACTIVATE_TASK,
-  text,
+  id,
+});
+
+
+export const showActiveAction = () => ({
+    type: CONST.SHOW_ACTIVE,
+});
+
+
+export const showClosedAction = () => ({
+    type: CONST.SHOW_CLOSED,
+});
+
+export const showAllAction = () => ({
+    type: CONST.SHOW_ALL,
 });
